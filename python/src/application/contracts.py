@@ -87,7 +87,6 @@ class CommandBus:
         return handle_chain(command)
 
 # Конкретные команды и запросы
-
 @dataclass
 class FetchOrderBookCommand(Command):
     """Команда для получения данных стакана"""

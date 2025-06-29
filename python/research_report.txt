@@ -1,0 +1,20 @@
+
+==================== RESEARCH REPORT ====================
+Strategy: Orderbook Delta Momentum
+Symbol: ETHUSDT
+Timeframe: 2025-06-29T13:50:04+00:00 - 2025-06-29T13:51:23+00:00
+Total Iterations: 0
+---------------------------------------------------------
+Performance Metrics:
+Initial Balance: $10000.00
+Final Balance:   $8548.17
+Position:        0.200000 ETH
+Position Value:  $1458.83
+Total Value:     $10007.00
+PNL:             $7.00
+Total Trades:    18
+---------------------------------------------------------
+Conclusion: This research demonstrates a basic strategy
+based on orderbook delta momentum. The strategy showed
+a profit of $7.00 over 0 iterations.
+=========================================================

@@ -1,9 +1,6 @@
 # 📊 Orderbook Delta Momentum Strategy
-
 **Test assignment for trading based on orderbook delta (Level 2) from Bybit exchange.**
 This strategy identifies trade entry and exit points based on volume shifts in bid/ask sides. The project implements a full pipeline: data collection → signal generation → backtest → final report.
-
----
 
 ## 🚀 Quick Start
 
@@ -34,8 +31,6 @@ TRADE_QUANTITY = 0.1     # Trade volume (ETH)
 MAX_ITERATIONS = 100     # Number of ticks to simulate
 ```
 
----
-
 ## 🔁 Workflow
 
 ```bash
@@ -49,8 +44,6 @@ python main.py
 4. Generate signals (BUY / SELL / HOLD)
 5. Execute virtual trades
 6. Print final strategy performance report
-
----
 
 ## ⚙️ Components
 
@@ -74,8 +67,6 @@ python main.py
 
 * `ReportGenerator` — builds final performance report & metrics
 
----
-
 ## 📁 Project Structure
 
 | File/Folder         | Purpose                             |
@@ -89,8 +80,6 @@ python main.py
 | `bybit_*.py`        | REST adapters for Bybit API         |
 | `report.py`         | Performance metrics and charts      |
 | `config.py`         | Backtest and trade parameters       |
-
----
 
 ## 📊 Example Report
 
@@ -116,8 +105,6 @@ a profit of $1300.00 over 100 iterations.
 =========================================================
 ```
 
----
-
 ## 📉 Trade Visualization
 
 Each trade is visualized on a bar chart:
@@ -133,8 +120,6 @@ You can quickly evaluate:
 - Trade frequency and timing
 - Profit/loss distribution
 - Strategy consistency
-
----
 
 ### 📄 `trades_report.csv` — Raw Log of All Trades
 
@@ -155,8 +140,6 @@ Optionally: `trade_id`, `position_size`, `exit_price`, `duration`, etc.
 - Enables charting (e.g. `trade_prices.png`)
 - Useful for calculating metrics like winrate, average PnL, drawdown, etc.
 - Easily importable into `pandas` or Excel
-
----
 
 ## 🧰 Dependencies
 

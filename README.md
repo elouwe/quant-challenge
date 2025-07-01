@@ -1,11 +1,13 @@
-# Orderbook Delta Momentum Strategy
+# 📊 Orderbook Delta Momentum Strategy
 
-**Тестовое задание по торговле на основе дельты стакана ордеров (Level 2) с биржи Bybit.**
-Стратегия определяет моменты входа и выхода из позиции на основе изменений объёма бидов и асков. Проект реализует полный pipeline: сбор данных → генерация сигналов → бэктест → отчёт.
+**Test assignment for trading based on orderbook delta (Level 2) from Bybit exchange.**
+This strategy identifies trade entry and exit points based on volume shifts in bid/ask sides. The project implements a full pipeline: data collection → signal generation → backtest → final report.
 
-## Быстрый старт
+---
 
-### 🔧 Установка зависимостей
+## 🚀 Quick Start
+
+### 🔧 Install Dependencies
 
 ```bash
 pip install \
@@ -18,76 +20,79 @@ pip install \
   python-dateutil>=2.8.2
 ```
 
-### ⚙️ Конфигурация (`config.py`)
+### ⚙️ Configuration (`config.py`)
 
 ```python
-# Параметры торговли
-SYMBOL = "ETHUSDT"       # Торговая пара
-TESTNET = True           # Использовать Bybit testnet
-DELTA_THRESHOLD = 0.1    # Чувствительность сигнала 
+# Trading Parameters
+SYMBOL = "ETHUSDT"       # Trading pair
+TESTNET = True           # Use Bybit testnet
+DELTA_THRESHOLD = 0.1    # Delta sensitivity
 
-# Настройки бэктеста
-INITIAL_BALANCE = 10000  # Стартовый капитал (USD)
-TRADE_QUANTITY = 0.1     # Объем сделки (ETH)
-MAX_ITERATIONS = 100     # Количество тиков симуляции
+# Backtest Settings
+INITIAL_BALANCE = 10000  # Starting capital (USD)
+TRADE_QUANTITY = 0.1     # Trade volume (ETH)
+MAX_ITERATIONS = 100     # Number of ticks to simulate
 ```
 
 ---
 
-## Рабочий процесс
+## 🔁 Workflow
 
 ```bash
 python main.py
 ```
 
-**Что происходит:**
+**Steps:**
+1. Connect to Bybit Testnet
+2. Fetch orderbook snapshots via REST API
+3. Calculate delta between snapshots
+4. Generate signals (BUY / SELL / HOLD)
+5. Execute virtual trades
+6. Print final strategy performance report
 
-1. Подключение к Bybit Testnet
-2. Опрос стакана ордеров через REST API
-3. Расчёт дельты между тик-снапшотами
-4. Генерация сигналов (BUY / SELL / HOLD)
-5. Виртуальное исполнение сделок
-6. Финальный отчёт о результатах стратегии
+---
 
+## ⚙️ Components
 
-## Компоненты
+### Data Collection
 
-### Получение данных
+* `bybit_client.py`, `bybit_adapter.py` — REST integration with Bybit
+* Level 2 snapshot fetching: bids / asks
+* Delta calculation engine
 
-* `bybit_client.py`, `bybit_adapter.py` — REST-интеграция с Bybit
-* Сбор Level 2 данных: bids / asks
-* Расчёт дельты ордербука
+### Signal Generation
 
-### Генерация сигналов
+* `DeltaStrategy` — basic logic: if delta > threshold → BUY/SELL
+* Threshold is configured in `config.py`
 
-* `DeltaStrategy` — простая логика: если дельта превышает порог — BUY / SELL
-* Порог задаётся в `config.py`
+### Backtest
 
-### Бэктест
+* `Backtester` — trade simulator using generated signals
+* No slippage or fees assumed (simplified simulation)
 
-* `Backtester` — симулятор торговли по сигналам
-* Простое исполнение без проскальзывания и комиссий
+### Reporting
 
-### Отчёты
+* `ReportGenerator` — builds final performance report & metrics
 
-* `ReportGenerator` — формирует финальный отчёт и метрики
+---
 
-## 📁 Структура проекта
+## 📁 Project Structure
 
-| Файл/Папка            | Назначение                          |
-| --------------------- | ----------------------------------- |
-| `main.py`             | Точка входа, цикл симуляции         |
-| `data_service.py`     | Получение и обработка стакана       |
-| `strategy_service.py` | Генерация сигналов на основе дельты |
-| `backtest_service.py` | Виртуальное исполнение сделок       |
-| `handlers.py`         | Обработчики команд (CQRS)           |
-| `contracts.py`        | Базовая реализация паттерна CQRS    |
-| `bybit_*.py`          | REST адаптеры под API Bybit         |
-| `report.py`           | Генерация финальных метрик          |
-| `config.py`           | Все параметры теста и торговли      |
+| File/Folder         | Purpose                             |
+| ------------------- | ----------------------------------- |
+| `main.py`           | Entry point, simulation loop        |
+| `data_service.py`   | Orderbook fetching & delta logic    |
+| `strategy_service.py`| Delta-based signal generation       |
+| `backtest_service.py`| Trade execution simulator           |
+| `handlers.py`       | Command handlers (CQRS)             |
+| `contracts.py`      | Basic CQRS pattern implementation   |
+| `bybit_*.py`        | REST adapters for Bybit API         |
+| `report.py`         | Performance metrics and charts      |
+| `config.py`         | Backtest and trade parameters       |
 
+---
 
-## 🧪 Пример отчёта
+## 📊 Example Report
 
 ```
 ==================== RESEARCH REPORT ====================
@@ -111,47 +116,51 @@ a profit of $1300.00 over 100 iterations.
 =========================================================
 ```
 
-## 📉 Визуализация сделок
+---
 
-Для анализа результатов каждая сделка визуализируется на графике:
+## 📉 Trade Visualization
+
+Each trade is visualized on a bar chart:
 
 ![Trade Prices](./python/trade_prices.png)
 
-* 🟩 Зелёные бары — успешные сделки (прибыльные)
-* 🟥 Красные бары — убыточные
-* Ось X — номер сделки
-* Ось Y — цена входа
+* 🟩 Green bars — profitable trades
+* 🟥 Red bars — losing trades
+* X-axis — trade index
+* Y-axis — entry price
 
-Это позволяет быстро оценить:
+You can quickly evaluate:
+- Trade frequency and timing
+- Profit/loss distribution
+- Strategy consistency
 
-* Частоту входов и выходов
-* Распределение прибыльных и убыточных сделок
-* Консистентность стратегии
+---
 
-### 📄 trades_report.csv — это сырой лог всех совершённых сделок стратегии.
+### 📄 `trades_report.csv` — Raw Log of All Trades
 
-Каждая строка — одна сделка. В отчёте обычно содержатся такие столбцы:
+Each row represents a trade event. Typical columns include:
 
-| Поле        | Что означает                             |
-| ----------- | ---------------------------------------- |
-| timestamp | Время совершения сделки (может быть тик) |
-| signal    | Сигнал, по которому вошли: BUY/SELL      |
-| price     | Цена входа в сделку                      |
-| position  | Направление: long / short (или 1 / -1)   |
-| pnl       | Прибыль или убыток по сделке             |
-| delta     | Значение дельты, вызвавшее сделку        |
+| Column     | Description                            |
+| ---------- | --------------------------------------- |
+| timestamp  | Timestamp of the trade (or tick)       |
+| signal     | BUY / SELL signal                      |
+| price      | Entry price                            |
+| position   | Direction: long / short (1 / -1)       |
+| pnl        | Profit or loss                         |
+| delta      | Delta value that triggered the signal  |
 
-Дополнительно могут быть поля вроде trade_id, position_size, exit_price, duration, но это зависит от реализации.
+Optionally: `trade_id`, `position_size`, `exit_price`, `duration`, etc.
 
-📌 Как используется:
+**Usage:**
+- Enables charting (e.g. `trade_prices.png`)
+- Useful for calculating metrics like winrate, average PnL, drawdown, etc.
+- Easily importable into `pandas` or Excel
 
-* Позволяет построить график, как тот, что ты приложила (trade_prices.png)
-* На его основе можно рассчитать winrate, среднюю прибыль/убыток, drawdown, и прочие метрики
-* Отлично подходит для дальнейшего анализа в pandas или Excel
+---
 
-## Зависимости
+## 🧰 Dependencies
 
-* Python 3.8+
-* `aiohttp`, `websockets` — сетевые запросы и потоки
-* `numpy`, `pandas`, `pyarrow` — обработка данных
-* `matplotlib`, `python-dateutil` — отчёты и графики
+- Python 3.8+
+- `aiohttp`, `websockets` — async network I/O
+- `numpy`, `pandas`, `pyarrow` — data processing
+- `matplotlib`, `python-dateutil` — charting and time parsing
